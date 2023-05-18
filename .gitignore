@@ -1,0 +1,7 @@
+/.vscode/
+/.xmake/
+/bin/
+/bin-int/
+/build/
+/vs2022/
+/Vendor/
