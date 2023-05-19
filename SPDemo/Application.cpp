@@ -1,4 +1,10 @@
 #include "Application.h"
+
+struct ApplicationPrivate
+{
+
+};
+
 ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 {
     static Application* app = new Application();
@@ -7,7 +13,7 @@ ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 
 Application::Application()
 {
-
+    p = new ApplicationPrivate();
 }
 
 Application::~Application()

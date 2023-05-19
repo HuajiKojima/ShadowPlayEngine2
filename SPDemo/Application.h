@@ -1,6 +1,8 @@
 #pragma once
 #include <ShadowPlay.h>
 
+struct ApplicationPrivate;
+
 class Application: public ShadowPlay::SPAppBase
 {
 public:
@@ -12,4 +14,5 @@ public:
     virtual void AppTerminateCallback();
 
 private:
+    ApplicationPrivate* p = nullptr;
 };
