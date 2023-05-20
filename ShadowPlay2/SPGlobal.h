@@ -31,4 +31,6 @@ inline void SPAssert(const char* fileName, unsigned int lineNum)
 	fflush(stderr);
 	abort();
 }
+#else
+#define SHADOWPLAY_ASSERT(condition)
 #endif
