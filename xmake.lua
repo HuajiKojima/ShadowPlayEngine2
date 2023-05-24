@@ -3,7 +3,12 @@ set_arch("x64")
 set_warnings("all")
 add_rules("mode.debug", "mode.release")
 
-add_requires("vulkansdk", "glfw", "glm")
+if is_plat("windows") then 
+    add_requires("vulkansdk", "glfw", "glm")
+end 
+if is_plat("linux") then 
+    add_requires("cmake::Vulkan", "glfw", "glm")
+end 
 
 target("ShadowPlay2")
     set_kind("shared")
@@ -15,7 +20,6 @@ target("ShadowPlay2")
     add_headerfiles("ShadowPlay2/Core/Memory/*.h")
     add_headerfiles("ShadowPlay2/*.h")
     add_includedirs("ShadowPlay2")
-    add_packages("vulkansdk", "glfw", "glm")
 
     set_pcxxheader("ShadowPlay2/ShadowPreCompileHeader.h")
 
@@ -24,9 +28,11 @@ target("ShadowPlay2")
     add_defines("SHADOWPLAY_API_VK")
     if is_plat("windows") then
         add_defines("SHADOWPLAY_PLAT_WIN")
+        add_packages("vulkansdk", "glfw", "glm")
     end
     if is_plat("linux") then
         add_defines("SHADOWPLAY_PLAT_LINUX")
+        add_packages("cmake::Vulkan", "glfw", "glm")
     end
     if is_mode("debug") then
         add_defines("SHADOWPLAY_DEBUG")
