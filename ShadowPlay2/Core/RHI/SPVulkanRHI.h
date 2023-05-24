@@ -11,7 +11,7 @@
         SPVulkanRHI();
         ~SPVulkanRHI();
 
-        virtual void RHIInit(int width, int height, const char* windowTitle);
+        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle);
         virtual void RHILoop();
         virtual void RHITerminate();
     private:

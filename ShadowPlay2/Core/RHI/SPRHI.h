@@ -12,12 +12,12 @@ namespace ShadowPlay
         SPRHI();
         ~SPRHI();
 
-        virtual void RHIInit(int width, int height, const char* windowTitle) = 0;
+        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle) = 0;
         virtual void RHILoop() = 0;
         virtual void RHITerminate() = 0;
 
     protected:
-        void setPrivate(int width, int height, const char* windowTitle);
+        void setPrivate(uint32_t width, uint32_t height, const char* windowTitle);
         int GetWidth();
         int GetHeight();
         const char* GetWindowTItle();

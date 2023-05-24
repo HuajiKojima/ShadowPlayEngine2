@@ -21,7 +21,7 @@ namespace ShadowPlay
 		SHADOWPLAY_ASSERT(p != nullptr);
         delete p;
     }
-    void SPRHI::setPrivate(int width, int height, const char *windowTitle)
+    void SPRHI::setPrivate(uint32_t width, uint32_t height, const char *windowTitle)
     {
 		SHADOWPLAY_ASSERT(p != nullptr);
 		p->m_windowWidth = width;

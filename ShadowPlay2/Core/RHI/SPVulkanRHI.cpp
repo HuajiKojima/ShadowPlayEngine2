@@ -20,7 +20,7 @@ namespace ShadowPlay
         SHADOWPLAY_ASSERT(p_vk != nullptr);
         delete p_vk;
     }
-    void SPVulkanRHI::RHIInit(int width, int height, const char *windowTitle)
+    void SPVulkanRHI::RHIInit(uint32_t width, uint32_t height, const char *windowTitle)
     {
         SHADOWPLAY_ASSERT(p_vk != nullptr);
         glfwInit();
