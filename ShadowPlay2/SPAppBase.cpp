@@ -2,6 +2,7 @@
 #include "SPAppBase.h"
 
 #include "Core/RHI/SPRHIFactory.h"
+#include "Core/Memory/SPMemManager.h"
 
 namespace ShadowPlay
 {
@@ -10,6 +11,7 @@ namespace ShadowPlay
     {
         SPRHI* m_rhiInstance = nullptr;
         SPRHIFactory* m_factoryInstance = nullptr;
+        SPHeapMemAllocator* m_memAllocator = SPHeapMemAllocatorFactory::GetAllocator();
     };
 
     SPAppBase::SPAppBase()
@@ -37,6 +39,7 @@ namespace ShadowPlay
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         p->m_rhiInstance->RHITerminate();
+        p->m_memAllocator->AllocatorTerminator();
         AppTerminateCallback();
     }
 }

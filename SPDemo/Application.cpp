@@ -1,8 +1,13 @@
 #include "Application.h"
+#include <Core/Memory/SPMemManager.h>
 
 struct ApplicationPrivate
 {
-
+    ApplicationPrivate()
+    {
+        a = 0;
+    }
+    int a;
 };
 
 ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
@@ -13,7 +18,12 @@ ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 
 Application::Application()
 {
-    p = new ApplicationPrivate();
+    //p = new ApplicationPrivate();
+    ApplicationPrivate* b;
+
+    SHADOWPLAY_ALLOC_HEAPMEM(p, ApplicationPrivate);
+    SHADOWPLAY_ALLOC_HEAPMEM(b, ApplicationPrivate);
+    SHADOWPLAY_DEALLOC_HEAPMEM(b, ApplicationPrivate);
 }
 
 Application::~Application()
