@@ -51,12 +51,14 @@ template <class T>
 inline void HeapMemAllocate(T* &pointer, const char* posFile, uint16_t posLine)
 {
     ShadowPlay::SPHeapMemAllocator* allocator = ShadowPlay::SPHeapMemAllocatorFactory::GetAllocator();
-    pointer = (T*)(allocator->MemAllocate(sizeof(T), false, posFile, posLine));
+    void* tempPointer = (allocator->MemAllocate(sizeof(T), false, posFile, posLine));
+    pointer = new(tempPointer)T();
 }
 
 template <class T>
 inline void HeapMemDeallocate(T* &pointer)
 {
+    pointer->~T();
     ShadowPlay::SPHeapMemAllocator* allocator = ShadowPlay::SPHeapMemAllocatorFactory::GetAllocator();
     allocator->MemDeallocate(pointer, false);
 }
@@ -74,11 +76,9 @@ inline void HeapArrayMemDeallocate(T* &pointer)
 }
 
 #define SHADOWPLAY_ALLOC_HEAPMEM(pointer, type)  \
-    HeapMemAllocate<type>(pointer, __FILE__, __LINE__);\
-    pointer->type::type();
+    HeapMemAllocate<type>(pointer, __FILE__, __LINE__);
 
 #define SHADOWPLAY_DEALLOC_HEAPMEM(pointer, type) \
-    pointer->type::~type(); \
     HeapMemDeallocate<type>(pointer);
 
 #define SHADOWPLAY_ALLOC_ARR_HEAPMEM(pointer)

@@ -47,8 +47,8 @@ namespace ShadowPlay
     void *SPHeapMemAllocatorD::MemAllocate(uint64_t length, uint8_t isArray, const char* posFile, uint16_t posLine)
     {  
         SPHeapMemAllocatorDBlock* newMem = nullptr;
-        newMem = (SPHeapMemAllocatorDBlock*)malloc(sizeof(SPHeapMemAllocatorDBlock) + length);
-        newMem->SPHeapMemAllocatorDBlock::SPHeapMemAllocatorDBlock();
+        void* tempNewMem = malloc(sizeof(SPHeapMemAllocatorDBlock) + length);
+        newMem = new(tempNewMem)SPHeapMemAllocatorDBlock();
         newMem->m_trueMem = (void*)(newMem + 1);
         newMem->m_blockID = 1;
         newMem->m_prev = nullptr;
