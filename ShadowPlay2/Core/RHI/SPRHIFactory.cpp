@@ -1,6 +1,10 @@
 #include "ShadowPreCompileHeader.h"
 #include "SPRHIFactory.h"
 
+#ifdef SHADOWPLAY_API_VK
+#include "SPVulkanRHI.h"
+#endif
+
 namespace ShadowPlay
 {
     struct SPRHIFactoryPrivate
@@ -36,13 +40,17 @@ namespace ShadowPlay
         case GraphicsAPI::API_NULL:
             p->m_rhi = nullptr;
             break;
+        #ifdef SHADOWPLAY_API_VK
         case GraphicsAPI::API_VULKAN:
             p->m_rhi = new SPVulkanRHI();
             break;
-        case GraphicsAPI::API_OPENGL:
+        #endif
+        #ifdef SHADOWPLAY_API_DIRECTX
+        case GraphicsAPI::API_DIRECTX:
             p->m_rhi = nullptr;
             break;
-        case GraphicsAPI::API_DIRECTX:
+        #endif
+        case GraphicsAPI::API_OPENGL:
             p->m_rhi = nullptr;
             break;
         default:

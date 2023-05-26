@@ -1,7 +1,7 @@
 #pragma once
 #include <SPGlobal.h>
 
-#include "SPVulkanRHI.h"
+#include "SPRHI.h"
 
 namespace ShadowPlay
 {
@@ -10,9 +10,14 @@ namespace ShadowPlay
     enum class GraphicsAPI
     {
         API_NULL = 0,
+    #ifdef SHADOWPLAY_API_VK
         API_VULKAN,
-        API_OPENGL,
-        API_DIRECTX
+    #endif
+        
+    #ifdef SHADOWPLAY_API_DIRECTX
+        API_DIRECTX,
+    #endif
+        API_OPENGL
     };
 
     class SHADOWPLAY_API SPRHIFactory

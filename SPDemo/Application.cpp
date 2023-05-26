@@ -18,16 +18,12 @@ ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 
 Application::Application()
 {
-    //p = new ApplicationPrivate();
-    ApplicationPrivate* b;
-
     SHADOWPLAY_ALLOC_HEAPMEM(p, ApplicationPrivate);
-    SHADOWPLAY_ALLOC_HEAPMEM(b, ApplicationPrivate);
-    SHADOWPLAY_DEALLOC_HEAPMEM(b, ApplicationPrivate);
 }
 
 Application::~Application()
 {
+   
 }
 
 void Application::AppInitCallback()
@@ -40,4 +36,5 @@ void Application::AppRunCallback()
 
 void Application::AppTerminateCallback()
 {
+    SHADOWPLAY_DEALLOC_HEAPMEM(p, ApplicationPrivate);
 }

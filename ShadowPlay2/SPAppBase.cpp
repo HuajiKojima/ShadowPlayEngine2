@@ -38,8 +38,8 @@ namespace ShadowPlay
     void SPAppBase::AppTerminate()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
+        AppTerminateCallback();
         p->m_rhiInstance->RHITerminate();
         p->m_memAllocator->AllocatorTerminator();
-        AppTerminateCallback();
     }
 }

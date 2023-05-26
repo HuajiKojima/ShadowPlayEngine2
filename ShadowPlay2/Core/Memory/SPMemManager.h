@@ -43,6 +43,12 @@ namespace ShadowPlay
     class SHADOWPLAY_API SPHeapMemAllocatorFactory
     {
     public:
+        enum class SPHeapMemoryManagerWorkingMode
+        {
+            HEAP_MEM_DEBUG = 0,
+            HEAP_MEM_RELEASE
+        };
+
         static SPHeapMemAllocator* GetAllocator(); 
     };
 }
