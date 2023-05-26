@@ -10,11 +10,41 @@ if is_plat("linux") then
     add_requires("cmake::Vulkan", "tinyxml2", "glfw", "glm")
 end 
 
+target("SPTools")
+    set_kind("shared")
+    set_targetdir("SPTools")
+    add_files("SPTools/XMLTool/*.cpp")
+    add_headerfiles("SPTools/XMLTool/*.h")
+    add_headerfiles("SPTools/*.h")
+    add_includedirs("SPTools")
+
+    set_pcxxheader("SPTools/ToolsPreCompileHeader.h")
+
+    set_symbols("debug")
+    set_strip("all")
+
+    if is_plat("windows") then
+        add_defines("SHADOWPLAY_PLAT_WIN")
+    end
+    if is_plat("linux") then
+        add_defines("SHADOWPLAY_PLAT_LINUX")
+    end
+
+    add_defines("SHADOWPLAY_TOOLS_EXPORT")
+    add_packages("tinyxml2")
+
+    set_basename("SPTools_$(mode)_$(arch)")
+    set_targetdir("bin/$(arch)/$(mode)")
+    set_objectdir("bin-int/$(arch)/$(mode)")
+target_end()
+
 target("SPConfig")
     set_kind("shared")
+    add_deps("SPTools")
     set_targetdir("SPConfig")
     add_files("SPConfig/*.cpp")
     add_headerfiles("SPConfig/*.h")
+    add_includedirs("SPTools")
 
     set_pcxxheader("SPConfig/ConfigPreCompileHeader.h")
 
@@ -29,9 +59,8 @@ target("SPConfig")
     end
 
     add_defines("SHADOWPLAY_CONFIG_EXPORT")
-    add_packages("tinyxml2")
 
-    set_basename("SPDemo_$(mode)_$(arch)")
+    set_basename("SPConfig_$(mode)_$(arch)")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()
