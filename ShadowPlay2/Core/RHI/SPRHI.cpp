@@ -7,8 +7,8 @@ namespace ShadowPlay
     {
         // The large param is up, smaller is down.
 		const char* m_windowTitle = nullptr;	// 8 Bytes
-		int m_windowWidth = 0;					// 4 Bytes
-		int m_windowHeight = 0;					// 4 Bytes
+		int m_windowWidth = 0;					      // 4 Bytes
+		int m_windowHeight = 0;					      // 4 Bytes
     };
 
     SPRHI::SPRHI()
@@ -38,7 +38,7 @@ namespace ShadowPlay
 		SHADOWPLAY_ASSERT(p != nullptr);
         return p->m_windowHeight;
     }
-    const char *SPRHI::GetWindowTItle()
+    const char *SPRHI::GetWindowTitle()
     {
 		SHADOWPLAY_ASSERT(p != nullptr);
         return p->m_windowTitle;

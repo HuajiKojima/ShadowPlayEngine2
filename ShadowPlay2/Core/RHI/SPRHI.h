@@ -20,7 +20,7 @@ namespace ShadowPlay
         void setPrivate(uint32_t width, uint32_t height, const char* windowTitle);
         int GetWidth();
         int GetHeight();
-        const char* GetWindowTItle();
+        const char* GetWindowTitle();
 
     private:
         SPRHIPrivate* p = nullptr;

@@ -4,10 +4,10 @@ set_warnings("all")
 add_rules("mode.debug", "mode.release")
 
 if is_plat("windows") then 
-    add_requires("vulkansdk", "tinyxml2", "glfw", "glm")
+    add_requires("vulkansdk", "tinyxml2", "glfw", "glad", "glm")
 end 
 if is_plat("linux") then 
-    add_requires("cmake::Vulkan", "tinyxml2", "glfw", "glm")
+    add_requires("cmake::Vulkan", "tinyxml2", "glfw", "glad", "glm")
 end 
 
 target("SPTools")
@@ -33,7 +33,7 @@ target("SPTools")
     add_defines("SHADOWPLAY_TOOLS_EXPORT")
     add_packages("tinyxml2")
 
-    set_basename("SPTools_$(mode)_$(arch)")
+    set_basename("SPTools")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()
@@ -60,7 +60,7 @@ target("SPConfig")
 
     add_defines("SHADOWPLAY_CONFIG_EXPORT")
 
-    set_basename("SPConfig_$(mode)_$(arch)")
+    set_basename("SPConfig")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()
@@ -88,11 +88,11 @@ target("ShadowPlay2")
     add_defines("SHADOWPLAY_API_DIRECTX")
     if is_plat("windows") then
         add_defines("SHADOWPLAY_PLAT_WIN")
-        add_packages("vulkansdk", "glfw", "glm")
+        add_packages("vulkansdk", "glfw", "glad", "glm")
     end
     if is_plat("linux") then
         add_defines("SHADOWPLAY_PLAT_LINUX")
-        add_packages("cmake::Vulkan", "glfw", "glm")
+        add_packages("cmake::Vulkan", "glfw", "glad", "glm")
     end
     if is_mode("debug") then
         add_defines("SHADOWPLAY_DEBUG")
@@ -101,13 +101,14 @@ target("ShadowPlay2")
     set_symbols("debug")
     set_strip("all")
 
-    set_basename("ShadowPlay2_$(mode)_$(arch)")
+    set_basename("ShadowPlay2")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()
 
 target("SPDemo")
     set_kind("binary")
+    add_deps("SPTools")
     add_deps("SPConfig")
     add_deps("ShadowPlay2")
     set_targetdir("SPDemo")
@@ -115,11 +116,12 @@ target("SPDemo")
     add_headerfiles("SPDemo/*.h")
     add_includedirs("ShadowPlay2")
     add_includedirs("SPConfig")
+    add_includedirs("SPTools")
 
     set_symbols("debug")
     set_strip("all")
 
-    set_basename("SPDemo_$(mode)_$(arch)")
+    set_basename("SPDemo")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()

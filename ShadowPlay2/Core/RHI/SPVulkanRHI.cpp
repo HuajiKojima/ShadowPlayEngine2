@@ -7,7 +7,7 @@ namespace ShadowPlay
     struct SPVulkanRHIPrivate
     {
         // The large param is up, smaller is down.
-		GLFWwindow* m_window = nullptr;			// 8 Bytes
+		GLFWwindow* m_window = nullptr;				// 8 Bytes
 		VkInstance m_instance = nullptr;			// 8 Bytes
     };
     

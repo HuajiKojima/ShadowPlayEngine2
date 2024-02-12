@@ -5,6 +5,8 @@
 #include "SPVulkanRHI.h"
 #endif
 
+#include "SPOpenGLRHI.h"
+
 namespace ShadowPlay
 {
     struct SPRHIFactoryPrivate
@@ -51,7 +53,7 @@ namespace ShadowPlay
             break;
         #endif
         case GraphicsAPI::API_OPENGL:
-            p->m_rhi = nullptr;
+            p->m_rhi = new SPOpenGLRHI();
             break;
         default:
             p->m_rhi = nullptr;
