@@ -1,7 +1,7 @@
-/.vscode/
-/.xmake/
-/bin/
-/bin-int/
-/build/
-/vsxmake2022/
-/Vendor/
+.vscode/
+.xmake/
+bin/
+bin-int/
+build/
+vsxmake2022/
+Vendor/
