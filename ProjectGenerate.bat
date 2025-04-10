@@ -1,2 +1,2 @@
-xmake project -k vs2022 -m "debug,release"
+xmake project -k vsxmake
 pause

@@ -38,36 +38,8 @@ target("SPTools")
     set_objectdir("bin-int/$(arch)/$(mode)")
 target_end()
 
-target("SPConfig")
-    set_kind("shared")
-    add_deps("SPTools")
-    set_targetdir("SPConfig")
-    add_files("SPConfig/*.cpp")
-    add_headerfiles("SPConfig/*.h")
-    add_includedirs("SPTools")
-
-    set_pcxxheader("SPConfig/ConfigPreCompileHeader.h")
-
-    set_symbols("debug")
-    set_strip("all")
-
-    if is_plat("windows") then
-        add_defines("SHADOWPLAY_PLAT_WIN")
-    end
-    if is_plat("linux") then
-        add_defines("SHADOWPLAY_PLAT_LINUX")
-    end
-
-    add_defines("SHADOWPLAY_CONFIG_EXPORT")
-
-    set_basename("SPConfig")
-    set_targetdir("bin/$(arch)/$(mode)")
-    set_objectdir("bin-int/$(arch)/$(mode)")
-target_end()
-
 target("ShadowPlay2")
     set_kind("shared")
-    add_deps("SPConfig")
     set_targetdir("ShadowPlay2")
     add_files("ShadowPlay2/Core/RHI/*.cpp")
     add_files("ShadowPlay2/Core/Memory/*.cpp")
@@ -78,7 +50,6 @@ target("ShadowPlay2")
     add_headerfiles("ShadowPlay2/Core/MultiThread/*.h")
     add_headerfiles("ShadowPlay2/*.h")
     add_includedirs("ShadowPlay2")
-    add_includedirs("SPConfig")
 
     set_pcxxheader("ShadowPlay2/ShadowPreCompileHeader.h")
 
@@ -109,13 +80,11 @@ target_end()
 target("SPDemo")
     set_kind("binary")
     add_deps("SPTools")
-    add_deps("SPConfig")
     add_deps("ShadowPlay2")
     set_targetdir("SPDemo")
     add_files("SPDemo/*.cpp")
     add_headerfiles("SPDemo/*.h")
     add_includedirs("ShadowPlay2")
-    add_includedirs("SPConfig")
     add_includedirs("SPTools")
 
     set_symbols("debug")
