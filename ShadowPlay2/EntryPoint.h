@@ -9,6 +9,5 @@ int32_t main(int32_t argc, char** argv)
     application->AppRun();
     application->AppTerminate();
     delete application;
-    system("pause");
     return 0;
 }

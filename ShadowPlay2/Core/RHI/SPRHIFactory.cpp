@@ -5,6 +5,10 @@
 #include "SPVulkanRHI.h"
 #endif
 
+#ifdef SHADOWPLAY_API_DIRECTX
+#include "SPD3DRHI.h"
+#endif
+
 #include "SPOpenGLRHI.h"
 
 namespace ShadowPlay
@@ -49,7 +53,7 @@ namespace ShadowPlay
         #endif
         #ifdef SHADOWPLAY_API_DIRECTX
         case GraphicsAPI::API_DIRECTX:
-            p->m_rhi = nullptr;
+            p->m_rhi = new SPD3DRHI();
             break;
         #endif
         case GraphicsAPI::API_OPENGL:

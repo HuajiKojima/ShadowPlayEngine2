@@ -13,7 +13,6 @@ namespace ShadowPlay
     #ifdef SHADOWPLAY_API_VK
         API_VULKAN,
     #endif
-        
     #ifdef SHADOWPLAY_API_DIRECTX
         API_DIRECTX,
     #endif

@@ -9,7 +9,7 @@ namespace ShadowPlay
     {
     public:
         SPAppBase(/* args */);
-        ~SPAppBase();
+        virtual ~SPAppBase();
 
         void AppInit();
         void AppRun();

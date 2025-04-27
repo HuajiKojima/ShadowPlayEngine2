@@ -17,13 +17,14 @@ namespace ShadowPlay
     SPAppBase::SPAppBase()
     {
         p = new SPAppBasePrivate();
-        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_OPENGL);
+        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX);
         p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
         std::cout << 1 << std::endl;
     }
     SPAppBase::~SPAppBase()
     {
         std::cout << 3 << std::endl;
+        p->m_memAllocator->AllocatorTerminator();
     }
     void SPAppBase::AppInit()
     {
@@ -42,6 +43,5 @@ namespace ShadowPlay
         SHADOWPLAY_ASSERT(p != nullptr);
         AppTerminateCallback();
         p->m_rhiInstance->RHITerminate();
-        p->m_memAllocator->AllocatorTerminator();
     }
 }

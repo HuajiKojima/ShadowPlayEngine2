@@ -92,6 +92,13 @@ target("SPDemo")
     set_symbols("debug")
     set_strip("all")
 
+    if is_plat("windows") then
+        add_defines("SHADOWPLAY_PLAT_WIN")
+    end
+    if is_plat("linux") then
+        add_defines("SHADOWPLAY_PLAT_LINUX")
+    end
+
     set_basename("SPDemo")
     set_targetdir("bin/$(arch)/$(mode)")
     set_objectdir("bin-int/$(arch)/$(mode)")
