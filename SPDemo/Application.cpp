@@ -1,6 +1,5 @@
 #include "Application.h"
 #include <Core/Memory/SPMemManager.h>
-#include <XMLTool/XMLParser.h>
 
 #include <functional>
 #include <map>
@@ -39,7 +38,6 @@ Application::~Application()
 
 void Application::AppInitCallback()
 {
-    ShadowPlay::XMLParser::Testing();
 
     
 }

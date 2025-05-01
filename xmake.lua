@@ -4,39 +4,11 @@ set_warnings("all")
 add_rules("mode.debug", "mode.release")
 
 if is_plat("windows") then 
-    add_requires("vulkansdk", "tinyxml2", "glfw", "glad", "glm")
+    add_requires("vulkansdk", "glfw", "glad", "glm")
 end 
 if is_plat("linux") then 
-    add_requires("cmake::Vulkan", "tinyxml2", "glfw", "glad", "glm")
+    add_requires("cmake::Vulkan", "glfw", "glm")
 end 
-
-target("SPTools")
-    set_kind("shared")
-    set_targetdir("SPTools")
-    add_files("SPTools/XMLTool/*.cpp")
-    add_headerfiles("SPTools/XMLTool/*.h")
-    add_headerfiles("SPTools/*.h")
-    add_includedirs("SPTools")
-
-    set_pcxxheader("SPTools/ToolsPreCompileHeader.h")
-
-    set_symbols("debug")
-    set_strip("all")
-
-    if is_plat("windows") then
-        add_defines("SHADOWPLAY_PLAT_WIN")
-    end
-    if is_plat("linux") then
-        add_defines("SHADOWPLAY_PLAT_LINUX")
-    end
-
-    add_defines("SHADOWPLAY_TOOLS_EXPORT")
-    add_packages("tinyxml2")
-
-    set_basename("SPTools")
-    set_targetdir("bin/$(arch)/$(mode)")
-    set_objectdir("bin-int/$(arch)/$(mode)")
-target_end()
 
 target("ShadowPlay2")
     set_kind("shared")
@@ -46,12 +18,14 @@ target("ShadowPlay2")
     add_files("ShadowPlay2/Core/MultiThread/*.cpp")
     add_files("ShadowPlay2/Engine/World/*.cpp")
     add_files("ShadowPlay2/*.cpp")
+    add_files("Vendor/glad/src/*.c")
     add_headerfiles("ShadowPlay2/Core/RHI/*.h")
     add_headerfiles("ShadowPlay2/Core/Memory/*.h")
     add_headerfiles("ShadowPlay2/Core/MultiThread/*.h")
     add_headerfiles("ShadowPlay2/Engine/World/*.h")
     add_headerfiles("ShadowPlay2/*.h")
     add_includedirs("ShadowPlay2")
+    add_includedirs("Vendor/glad/include")
 
     set_pcxxheader("ShadowPlay2/ShadowPreCompileHeader.h")
 
@@ -65,7 +39,7 @@ target("ShadowPlay2")
     end
     if is_plat("linux") then
         add_defines("SHADOWPLAY_PLAT_LINUX")
-        add_packages("cmake::Vulkan", "glfw", "glad", "glm")
+        add_packages("cmake::Vulkan", "glfw", "glm")
     end
     if is_mode("debug") then
         add_defines("SHADOWPLAY_DEBUG")
@@ -81,13 +55,11 @@ target_end()
 
 target("SPDemo")
     set_kind("binary")
-    add_deps("SPTools")
     add_deps("ShadowPlay2")
     set_targetdir("SPDemo")
     add_files("SPDemo/*.cpp")
     add_headerfiles("SPDemo/*.h")
     add_includedirs("ShadowPlay2")
-    add_includedirs("SPTools")
 
     set_symbols("debug")
     set_strip("all")
