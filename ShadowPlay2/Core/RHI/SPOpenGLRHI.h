@@ -5,7 +5,7 @@ namespace ShadowPlay
 {
 	struct SPOpenGLRHIPrivate;
 
-	class SHADOWPLAY_API SPOpenGLRHI :public SPRHI
+	class SHADOWPLAY_API SPOpenGLRHI final : public SPRHI
 	{
 	public:
 		SPOpenGLRHI();

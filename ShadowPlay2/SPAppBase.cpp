@@ -17,7 +17,7 @@ namespace ShadowPlay
     SPAppBase::SPAppBase()
     {
         p = new SPAppBasePrivate();
-        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_OPENGL);
+        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX);
         p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
         std::cout << 1 << std::endl;
     }

@@ -5,7 +5,7 @@
  {
     struct SPVulkanRHIPrivate;
 
-    class SHADOWPLAY_API SPVulkanRHI: public SPRHI
+    class SHADOWPLAY_API SPVulkanRHI final : public SPRHI
     {
     public:
         SPVulkanRHI();

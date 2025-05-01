@@ -6,7 +6,7 @@ namespace ShadowPlay
 {
     struct SPD3DRHIPrivate;
 
-    class SHADOWPLAY_API SPD3DRHI: public SPRHI
+    class SHADOWPLAY_API SPD3DRHI final : public SPRHI
     {
     public:
         SPD3DRHI();

@@ -4,7 +4,7 @@ set_warnings("all")
 add_rules("mode.debug", "mode.release")
 
 if is_plat("windows") then 
-    add_requires("vulkansdk", "glfw", "glad", "glm")
+    add_requires("vulkansdk", "glfw", "glm", "d3d11")
 end 
 if is_plat("linux") then 
     add_requires("cmake::Vulkan", "glfw", "glm")
@@ -35,7 +35,7 @@ target("ShadowPlay2")
     add_defines("SHADOWPLAY_API_DIRECTX")
     if is_plat("windows") then
         add_defines("SHADOWPLAY_PLAT_WIN")
-        add_packages("vulkansdk", "glfw", "glad", "glm")
+        add_packages("vulkansdk", "glfw", "glm", "d3d11")
     end
     if is_plat("linux") then
         add_defines("SHADOWPLAY_PLAT_LINUX")

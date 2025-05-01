@@ -4,6 +4,7 @@
 #ifdef SHADOWPLAY_PLAT_WIN
 #include <d3d11.h>
 #include <d3d11shader.h>
+#include <wrl.h>
 
 static LRESULT CALLBACK WindowProcCallback(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) 
 {
@@ -28,6 +29,10 @@ namespace ShadowPlay
 #ifdef SHADOWPLAY_PLAT_WIN
         WNDCLASSEX* m_windowContext = nullptr;
         HANDLE m_windowPtr;
+
+        Microsoft::WRL::ComPtr<ID3D11Device> m_d3dDevice;
+        Microsoft::WRL::ComPtr<ID3D11DeviceContext> m_d3dDeviceCtx;
+
 #endif
         bool m_runningPermission = true;
         bool m_renderLoop = true;
@@ -44,6 +49,7 @@ namespace ShadowPlay
     void SPD3DRHI::RHIInit(uint32_t width, uint32_t height, const char *windowTitle)
     {
 #ifdef SHADOWPLAY_PLAT_WIN
+        // Win32 window initialize.
         p_d3d->m_windowContext = new WNDCLASSEX();
         p_d3d->m_windowContext->cbSize = sizeof(WNDCLASSEX);
         p_d3d->m_windowContext->lpszClassName = windowTitle;
@@ -66,6 +72,47 @@ namespace ShadowPlay
             WS_OVERLAPPED | WS_CAPTION | WS_SYSMENU, CW_USEDEFAULT, CW_USEDEFAULT,
             windowRC.right - windowRC.left, windowRC.bottom - windowRC.top,
             NULL, NULL, NULL, NULL);
+
+        // DirectX 11 3D API initialize.
+        D3D_FEATURE_LEVEL apiFeatureLevel;
+        UINT createDeviceFlags;
+
+        D3D_FEATURE_LEVEL featureLevels[] = {
+            /*D3D_FEATURE_LEVEL_12_2,
+            D3D_FEATURE_LEVEL_12_1,
+            D3D_FEATURE_LEVEL_12_0,*/
+            D3D_FEATURE_LEVEL_11_1,
+            D3D_FEATURE_LEVEL_11_0,
+            D3D_FEATURE_LEVEL_10_1,
+            D3D_FEATURE_LEVEL_10_0,
+            D3D_FEATURE_LEVEL_9_3,
+            D3D_FEATURE_LEVEL_9_2,
+            D3D_FEATURE_LEVEL_9_1
+        };
+        UINT numFeatureLevels = ARRAYSIZE(featureLevels);
+
+#ifdef SHADOWPLAY_DEBUG
+        createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+#endif // SHADOWPLAY_DEBUG
+
+        auto initResult = D3D11CreateDevice(
+            NULL,
+            D3D_DRIVER_TYPE_HARDWARE,
+            NULL,
+            createDeviceFlags,
+            featureLevels,
+            numFeatureLevels,
+            D3D11_SDK_VERSION,
+            &p_d3d->m_d3dDevice,
+            &apiFeatureLevel,
+            &p_d3d->m_d3dDeviceCtx);
+
+        if (FAILED(initResult)) 
+        {
+            p_d3d->m_runningPermission = false;
+            return;
+        }
+
 
         ShowWindow(static_cast<HWND>(p_d3d->m_windowPtr), SW_SHOW);
 #endif
