@@ -38,7 +38,8 @@ namespace ShadowPlay
         bool m_renderLoop = true;
     };
 
-    SPD3DRHI::SPD3DRHI()
+	SPD3DRHI::SPD3DRHI(SPDirectXBaseRelays& relay)
+		: SPObject(relay.m_logger)
     {
         p_d3d = new SPD3DRHIPrivate();
     }
@@ -48,6 +49,8 @@ namespace ShadowPlay
     }
     void SPD3DRHI::RHIInit(uint32_t width, uint32_t height, const char *windowTitle)
     {
+		SHADOWPLAY_ASSERT(p_d3d != nullptr);
+
 #ifdef SHADOWPLAY_PLAT_WIN
         // Win32 window initialize.
         p_d3d->m_windowContext = new WNDCLASSEX();
@@ -58,6 +61,7 @@ namespace ShadowPlay
 
         if (!windowClassID) 
         {
+			GetLogger().Log(SPLogger::LoggerLevel::LOG_ERROR, "Create Win32 window failed.");
             p_d3d->m_runningPermission = false;
             return;
         }
@@ -75,7 +79,7 @@ namespace ShadowPlay
 
         // DirectX 11 3D API initialize.
         D3D_FEATURE_LEVEL apiFeatureLevel;
-        UINT createDeviceFlags;
+        UINT createDeviceFlags = 0;
 
         D3D_FEATURE_LEVEL featureLevels[] = {
             /*D3D_FEATURE_LEVEL_12_2,
@@ -92,7 +96,7 @@ namespace ShadowPlay
         UINT numFeatureLevels = ARRAYSIZE(featureLevels);
 
 #ifdef SHADOWPLAY_DEBUG
-        createDeviceFlags |= D3D11_CREATE_DEVICE_DEBUG;
+        createDeviceFlags = D3D11_CREATE_DEVICE_DEBUG;
 #endif // SHADOWPLAY_DEBUG
 
         auto initResult = D3D11CreateDevice(
@@ -109,6 +113,7 @@ namespace ShadowPlay
 
         if (FAILED(initResult)) 
         {
+            GetLogger().Log(SPLogger::LoggerLevel::LOG_ERROR, "Create D3D device failed.");
             p_d3d->m_runningPermission = false;
             return;
         }
@@ -119,7 +124,9 @@ namespace ShadowPlay
     }
     void SPD3DRHI::RHILoop()
     {
-        if (p_d3d == nullptr || !p_d3d->m_runningPermission) 
+		SHADOWPLAY_ASSERT(p_d3d != nullptr);
+
+        if (!p_d3d->m_runningPermission) 
         {
             return;
         }
@@ -143,7 +150,8 @@ namespace ShadowPlay
     }
     void SPD3DRHI::RHITerminate()
     {
-        if (p_d3d == nullptr || !p_d3d->m_runningPermission)
+        SHADOWPLAY_ASSERT(p_d3d != nullptr);
+        if (!p_d3d->m_runningPermission)
         {
             return;
         }

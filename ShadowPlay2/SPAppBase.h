@@ -1,11 +1,14 @@
 #pragma once
 #include "SPGlobal.h"
+#include "Core/Common/SPObject.h"
+
+#include <memory>
 
 namespace ShadowPlay
 {
     struct SPAppBasePrivate;
 
-    class SHADOWPLAY_API SPAppBase
+	class SHADOWPLAY_API SPAppBase : public SPObject
     {
     public:
         SPAppBase(/* args */);

@@ -6,10 +6,10 @@ namespace ShadowPlay
 {
     struct SPD3DRHIPrivate;
 
-    class SHADOWPLAY_API SPD3DRHI final : public SPRHI
+	class SHADOWPLAY_API SPD3DRHI final : public SPRHI, public SPObject
     {
     public:
-        SPD3DRHI();
+        SPD3DRHI(SPDirectXBaseRelays& relay);
         ~SPD3DRHI();
 
         virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle);

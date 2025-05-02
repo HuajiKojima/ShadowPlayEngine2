@@ -11,6 +11,8 @@
 
 #include "SPOpenGLRHI.h"
 
+#include "../Common/SPCommon.h"
+
 namespace ShadowPlay
 {
     struct SPRHIFactoryPrivate
@@ -53,7 +55,13 @@ namespace ShadowPlay
         #endif
         #ifdef SHADOWPLAY_API_DIRECTX
         case GraphicsAPI::API_DIRECTX:
-            p->m_rhi = new SPD3DRHI();
+        {
+            SPDirectXBaseRelays relay
+            {
+				*std::make_unique<SPLogger>().release()
+            };
+            p->m_rhi = new SPD3DRHI(relay);
+        }
             break;
         #endif
         case GraphicsAPI::API_OPENGL:

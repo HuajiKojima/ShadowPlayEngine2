@@ -14,16 +14,19 @@ namespace ShadowPlay
         SPHeapMemAllocator* m_memAllocator = SPHeapMemAllocatorFactory::GetAllocator();
     };
 
-    SPAppBase::SPAppBase()
+	SPAppBase::SPAppBase()
+		: SPObject(*std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO).release())
     {
         p = new SPAppBasePrivate();
         p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX);
         p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
-        std::cout << 1 << std::endl;
+		//m_logger = std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO);
+        //std::cout << 1 << std::endl;
     }
     SPAppBase::~SPAppBase()
     {
-        std::cout << 3 << std::endl;
+        //std::cout << 3 << std::endl;
+		//m_logger->Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::~SPAppBase");
         p->m_memAllocator->AllocatorTerminator();
     }
     void SPAppBase::AppInit()

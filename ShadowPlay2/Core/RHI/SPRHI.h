@@ -1,11 +1,12 @@
 #pragma once
 #include <SPGlobal.h>
+#include "../Common/SPObject.h"
 
 namespace ShadowPlay
 {
     struct SPRHIPrivate;
 
-    class SHADOWPLAY_API SPRHI
+	class SHADOWPLAY_API SPRHI
     {
     public:
 

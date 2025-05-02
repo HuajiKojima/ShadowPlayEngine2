@@ -1,11 +1,13 @@
 #pragma once
 #include <SPGlobal.h>
+#include "../Common/SPObject.h"
+
 namespace ShadowPlay
 {
     struct SPHeapMemAllocatorDPrivate;
     struct SPHeapMemAllocatorRPrivate;
 
-    class SPHeapMemAllocator
+	class SPHeapMemAllocator
     {
     public:
         virtual void* MemAllocate(uint64_t length, uint8_t isArray, const char* posFile, uint16_t posLine) = 0;
@@ -14,11 +16,11 @@ namespace ShadowPlay
     };
 
     // Debug version
-    class SHADOWPLAY_API SPHeapMemAllocatorD: public SPHeapMemAllocator
+    class SHADOWPLAY_API SPHeapMemAllocatorD: public SPHeapMemAllocator, public SPObject
     {
     public:
         SPHeapMemAllocatorD();
-        ~SPHeapMemAllocatorD();
+        virtual ~SPHeapMemAllocatorD();
 
         virtual void* MemAllocate(uint64_t length, uint8_t isArray, const char* posFile, uint16_t posLine);
         virtual void MemDeallocate(void* tgtMemPointer, uint8_t isArray = false);
@@ -28,11 +30,11 @@ namespace ShadowPlay
     };
 
     // Release version
-    class SHADOWPLAY_API SPHeapMemAllocatorR: public SPHeapMemAllocator
+	class SHADOWPLAY_API SPHeapMemAllocatorR : public SPHeapMemAllocator, public SPObject
     {
     public:
         SPHeapMemAllocatorR();
-        ~SPHeapMemAllocatorR();
+        virtual ~SPHeapMemAllocatorR();
 
         virtual void* MemAllocate(uint64_t length, uint8_t isArray, const char* posFile, uint16_t posLine);
         virtual void MemDeallocate(void* tgtMemPointer, uint8_t isArray);
