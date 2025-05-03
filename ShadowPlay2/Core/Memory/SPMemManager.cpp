@@ -32,8 +32,7 @@ namespace ShadowPlay
     struct SPHeapMemAllocatorRPrivate
     {};
 
-    SPHeapMemAllocatorD::SPHeapMemAllocatorD():
-        SPObject({ *std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_WARNING).release() })
+    SPHeapMemAllocatorD::SPHeapMemAllocatorD()
     {
         p = new SPHeapMemAllocatorDPrivate();
     }
@@ -106,9 +105,7 @@ namespace ShadowPlay
         SPHeapMemAllocatorDBlock* memBlock = p->m_memBlocks;
         while (memBlock != nullptr)
         {
-            //std::cout << "Mem not release, location is \"" << memBlock->m_memPosFile << "\"(" << memBlock->m_memPosLine << ")" << std::endl;
-			std::string logMsg = "Mem not release, location is \"" + std::string(memBlock->m_memPosFile) + "\"(" + std::to_string(memBlock->m_memPosLine) + ")";
-			GetLogger().Log(SPLogger::LoggerLevel::LOG_WARNING, logMsg.c_str());
+            std::cout << "Mem not release, location is \"" << memBlock->m_memPosFile << "\"(" << memBlock->m_memPosLine << ")" << std::endl;
             p->m_memBlocks = memBlock->m_next;
             if (memBlock->m_next != nullptr) 
             {
@@ -121,8 +118,7 @@ namespace ShadowPlay
     }
 
     // Release version
-    SPHeapMemAllocatorR::SPHeapMemAllocatorR():
-        SPObject({ *std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_WARNING).release() })
+    SPHeapMemAllocatorR::SPHeapMemAllocatorR()
     {
         p = new SPHeapMemAllocatorRPrivate();
     }

@@ -15,18 +15,29 @@ namespace ShadowPlay
     };
 
 	SPAppBase::SPAppBase()
-		: SPObject(*std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO).release())
+        : SPObject({ *std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO).release() }),
+        m_logInstance(&m_objLogger)
     {
         p = new SPAppBasePrivate();
-        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX);
-        p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
-		//m_logger = std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO);
-        //std::cout << 1 << std::endl;
+
+		// Initialize the relay
+		SPObjRelays relays
+		{
+			m_objLogger
+		};
+		// Initialize the RHI relay
+		SPRHIBaseRelays rhiRelays
+		{
+			relays
+		};
+
+        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_OPENGL, rhiRelays);
+        p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();		
+        GetLogger().Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::SPAppBase");
     }
     SPAppBase::~SPAppBase()
     {
-        //std::cout << 3 << std::endl;
-		//m_logger->Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::~SPAppBase");
+		GetLogger().Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::~SPAppBase");
         p->m_memAllocator->AllocatorTerminator();
     }
     void SPAppBase::AppInit()

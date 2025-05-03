@@ -11,7 +11,8 @@ namespace ShadowPlay
 		int m_windowHeight = 0;					      // 4 Bytes
     };
 
-    SPRHI::SPRHI()
+    SPRHI::SPRHI(const SPRHIBaseRelays& relays):
+		SPObject(relays.m_baseObjRelay)
     {
         p = new SPRHIPrivate();
     }

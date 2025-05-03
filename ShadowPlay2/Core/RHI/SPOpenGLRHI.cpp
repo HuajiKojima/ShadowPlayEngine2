@@ -20,7 +20,8 @@ namespace ShadowPlay
 		glViewport(0, 0, width, height);
 	}
 
-	SPOpenGLRHI::SPOpenGLRHI()
+	SPOpenGLRHI::SPOpenGLRHI(const SPOpenGLBaseRelays& relay):
+		SPRHI(relay.m_baseRHIRelay)
 	{
 		p_gl = new SPOpenGLRHIPrivate();
 	}

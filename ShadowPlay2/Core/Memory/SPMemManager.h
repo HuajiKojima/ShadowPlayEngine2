@@ -16,7 +16,7 @@ namespace ShadowPlay
     };
 
     // Debug version
-    class SHADOWPLAY_API SPHeapMemAllocatorD: public SPHeapMemAllocator, public SPObject
+    class SHADOWPLAY_API SPHeapMemAllocatorD: public SPHeapMemAllocator
     {
     public:
         SPHeapMemAllocatorD();
@@ -30,7 +30,7 @@ namespace ShadowPlay
     };
 
     // Release version
-	class SHADOWPLAY_API SPHeapMemAllocatorR : public SPHeapMemAllocator, public SPObject
+	class SHADOWPLAY_API SPHeapMemAllocatorR : public SPHeapMemAllocator
     {
     public:
         SPHeapMemAllocatorR();

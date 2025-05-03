@@ -11,7 +11,8 @@ namespace ShadowPlay
 		VkInstance m_instance = nullptr;			// 8 Bytes
     };
     
-    SPVulkanRHI::SPVulkanRHI()
+    SPVulkanRHI::SPVulkanRHI(const SPVulkanBaseRelays& relay):
+		SPRHI(relay.m_baseRHIRelay)
     {
         p_vk = new SPVulkanRHIPrivate();
     }

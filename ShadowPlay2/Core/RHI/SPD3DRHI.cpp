@@ -38,8 +38,8 @@ namespace ShadowPlay
         bool m_renderLoop = true;
     };
 
-	SPD3DRHI::SPD3DRHI(SPDirectXBaseRelays& relay)
-		: SPObject(relay.m_logger)
+	SPD3DRHI::SPD3DRHI(const SPDirectXBaseRelays& relay)
+		: SPRHI(relay.m_baseRHIRelay)
     {
         p_d3d = new SPD3DRHIPrivate();
     }

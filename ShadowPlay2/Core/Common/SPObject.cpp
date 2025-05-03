@@ -3,10 +3,11 @@
 
 namespace ShadowPlay
 {
-    SPObject::SPObject(SPLogger& logger):
-		m_objLogger(logger)
+    SPObject::SPObject(const SPObjRelays& relays) :
+		m_objLogger(relays.m_logger)
     {
     }
+
     SPLogger& SPObject::GetLogger() const
     {
         return m_objLogger;

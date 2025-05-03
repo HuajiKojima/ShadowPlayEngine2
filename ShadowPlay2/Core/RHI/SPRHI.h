@@ -6,16 +6,16 @@ namespace ShadowPlay
 {
     struct SPRHIPrivate;
 
-	class SHADOWPLAY_API SPRHI
+	class SHADOWPLAY_API SPRHI : public SPObject
     {
     public:
 
-        SPRHI();
+        explicit SPRHI(const SPRHIBaseRelays& relays);
         ~SPRHI();
 
-        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle) = 0;
-        virtual void RHILoop() = 0;
-        virtual void RHITerminate() = 0;
+        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle) {}
+        virtual void RHILoop() {}
+        virtual void RHITerminate() {}
 
     protected:
         void setPrivate(uint32_t width, uint32_t height, const char* windowTitle);

@@ -3,34 +3,39 @@
 
 namespace ShadowPlay
 {
+	struct SPObjRelays
+	{
+		SPLogger& m_logger;
+	};
+
     struct SPAppBaseRelays
     {
-        SPLogger& m_logger;
+        SPObjRelays m_baseObjRelay;
     };
 
     struct SPRHIBaseRelays
     {
-        SPLogger& m_logger;
+        SPObjRelays m_baseObjRelay;
     };
 
     struct SPOpenGLBaseRelays
     {
-        SPLogger& m_logger;
+        SPRHIBaseRelays m_baseRHIRelay;
     };
 
     struct SPVulkanBaseRelays
     {
-        SPLogger& m_logger;
+        SPRHIBaseRelays m_baseRHIRelay;
     };
 
     struct SPDirectXBaseRelays
     {
-        SPLogger& m_logger;
+        SPRHIBaseRelays m_baseRHIRelay;
     };
 
     struct SPMemManagerBaseRelays
     {
-        SPLogger& m_logger;
+        SPObjRelays m_baseObjRelay;
     };
 
 }

@@ -16,6 +16,7 @@ namespace ShadowPlay
         };
 
         explicit SPLogger(LoggerLevel logLevel = LoggerLevel::LOG_ERROR);
+		~SPLogger();
         void Log(LoggerLevel level, const char* msgStr) const;
     private:
         LoggerLevel m_loggerLevel;

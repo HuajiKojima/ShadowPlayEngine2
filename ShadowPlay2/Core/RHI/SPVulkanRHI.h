@@ -8,7 +8,7 @@
     class SHADOWPLAY_API SPVulkanRHI final : public SPRHI
     {
     public:
-        SPVulkanRHI();
+        explicit SPVulkanRHI(const SPVulkanBaseRelays& relay);
         ~SPVulkanRHI();
 
         virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle);

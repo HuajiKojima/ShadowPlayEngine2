@@ -9,7 +9,7 @@ namespace ShadowPlay
     class SHADOWPLAY_API SPObject
     {
     public:
-        SPObject(SPLogger& logger);
+        explicit SPObject(const SPObjRelays& relays);
         virtual ~SPObject();
 
         // Disable copy constructor and assignment operator
@@ -22,7 +22,7 @@ namespace ShadowPlay
 
         virtual SPLogger& GetLogger() const final;
 
-	private:
+	protected:
 		SPLogger& m_objLogger; // Reference to the relays for logging and other operations
     };
 }

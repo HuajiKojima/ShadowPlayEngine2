@@ -1,24 +1,24 @@
 #include "ShadowPreCompileHeader.h"
-#include "SPObject.h"
+#include "SPWorldObject.h"
 
 #include "SPComponent.h"
 
 namespace ShadowPlay
 {
-    struct SPObjectPrivate
+    struct SPWorldObjectPrivate
     {
         std::vector<SPComponent*> m_componentList;
         int m_compoIDCounter = 0;
     };
 
-    SPObject::SPObject()
+    SPWorldObject::SPWorldObject()
     {
-        m_pri = new SPObjectPrivate;
+        m_pri = new SPWorldObjectPrivate;
     }
-    SPObject::~SPObject()
+    SPWorldObject::~SPWorldObject()
     {
     }
-    void SPObject::AddComponent(SPComponent* component)
+    void SPWorldObject::AddComponent(SPComponent* component)
     {
         if (m_pri == nullptr || component == nullptr) 
         {

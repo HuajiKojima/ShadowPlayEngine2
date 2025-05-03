@@ -2,22 +2,22 @@
 
 namespace ShadowPlay
 {
-    struct SPObjectPrivate;
+    struct SPWorldObjectPrivate;
 
     class SPComponent;
 
-    class SPObject
+    class SPWorldObject
     {
     public:
-        SPObject();
-        ~SPObject();
+        SPWorldObject();
+        ~SPWorldObject();
 
         void AddComponent(SPComponent* component);
 
 
 
     private:
-        SPObjectPrivate* m_pri = nullptr;
+        SPWorldObjectPrivate* m_pri = nullptr;
 
     };
 }

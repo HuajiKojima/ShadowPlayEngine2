@@ -24,6 +24,7 @@ namespace ShadowPlay
     private:
         /* data */
         SPAppBasePrivate* p;
+        std::unique_ptr<SPLogger> m_logInstance;
     };
 
     extern "C" SHADOWPLAY_API SPAppBase * ReturnApp();
