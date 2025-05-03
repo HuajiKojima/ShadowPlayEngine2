@@ -1,5 +1,6 @@
 #pragma once
-#include "../Tools/SPLogger.h" 
+#include "../Tools/SPLogger.h"
+#include "../../Engine/Math/SPRect.h"
 
 namespace ShadowPlay
 {
@@ -37,5 +38,13 @@ namespace ShadowPlay
     {
         SPObjRelays m_baseObjRelay;
     };
+
+	struct SPSwapChainBaseRelays
+	{
+#ifdef SHADOWPLAY_PLAT_WIN
+        void* m_windowHandle{};
+#endif // SHADOWPLAY_PLAT_WIN
+		SPRect m_viewPortRect{};
+	};
 
 }

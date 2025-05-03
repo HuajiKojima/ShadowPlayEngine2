@@ -1,0 +1,37 @@
+#pragma once
+#include <SPGlobal.h>
+#include "../Common/SPObject.h"
+#include <d3d11.h>
+
+namespace ShadowPlay 
+{
+	struct SPD3DRHIResourcesRelays
+	{
+		SPObjRelays m_baseObjRelay;
+#ifdef SHADOWPLAY_PLAT_WIN
+		ID3D11Device& m_device;
+		IDXGIFactory& m_factory;
+#endif // SHADOWPLAY_PLAT_WIN
+	};
+
+	// This class is used to manage the DirectX 3D resources.
+	class SPD3DRHIResources : public SPObject
+	{
+	public:
+		explicit SPD3DRHIResources(const SPD3DRHIResourcesRelays& relay) :
+			SPObject(relay.m_baseObjRelay),
+#ifdef SHADOWPLAY_PLAT_WIN
+			m_renderingDevice(relay.m_device),
+			m_dxgiFactory(relay.m_factory)
+#endif // SHADOWPLAY_PLAT_WIN
+		{
+		}
+	
+	protected:
+#ifdef SHADOWPLAY_PLAT_WIN
+		ID3D11Device& m_renderingDevice;
+		IDXGIFactory& m_dxgiFactory;
+#endif // SHADOWPLAY_PLAT_WIN
+
+	};
+}

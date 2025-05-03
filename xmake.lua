@@ -1,5 +1,6 @@
 set_project("ShadowPlay2")
 set_arch("x64")
+set_languages("cxx17")
 set_warnings("all")
 add_rules("mode.debug", "mode.release")
 
@@ -25,6 +26,7 @@ target("ShadowPlay2")
     add_headerfiles("ShadowPlay2/Core/Common/*.h")
     add_headerfiles("ShadowPlay2/Core/Tools/*.h")
     add_headerfiles("ShadowPlay2/Engine/World/*.h")
+    add_headerfiles("ShadowPlay2/Engine/Math/*.h")
     add_headerfiles("ShadowPlay2/*.h")
     add_includedirs("ShadowPlay2")
     add_includedirs("Vendor/glad/include")
@@ -37,6 +39,7 @@ target("ShadowPlay2")
     add_defines("SHADOWPLAY_API_DIRECTX")
     if is_plat("windows") then
         add_defines("SHADOWPLAY_PLAT_WIN")
+        add_defines("NOMINMAX")
         add_packages("vulkansdk", "glfw", "glm", "d3d11")
     end
     if is_plat("linux") then

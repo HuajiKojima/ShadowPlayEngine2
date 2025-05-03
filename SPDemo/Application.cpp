@@ -29,14 +29,13 @@ ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 Application::Application()
 {
     SHADOWPLAY_ALLOC_HEAPMEM(p, ApplicationPrivate);
-	GetLogger().Log(ShadowPlay::SPLogger::LoggerLevel::LOG_INFO, "Application::Application");
-
+    LOG_INFO("Application::Application");
 }
 
 Application::~Application()
 {
     SHADOWPLAY_DEALLOC_HEAPMEM(p, ApplicationPrivate);
-    GetLogger().Log(ShadowPlay::SPLogger::LoggerLevel::LOG_INFO, "Application::~Application");
+	LOG_INFO("Application::~Application");
 }
 
 void Application::AppInitCallback()

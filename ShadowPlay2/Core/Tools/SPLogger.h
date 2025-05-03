@@ -23,3 +23,8 @@ namespace ShadowPlay
         
     };
 }
+
+// Macros for logging
+#define LOG_ERROR(msg) GetLogger().Log(ShadowPlay::SPLogger::LoggerLevel::LOG_ERROR, msg)
+#define LOG_WARNING(msg) GetLogger().Log(ShadowPlay::SPLogger::LoggerLevel::LOG_WARNING, msg)
+#define LOG_INFO(msg) GetLogger().Log(ShadowPlay::SPLogger::LoggerLevel::LOG_INFO, msg)

@@ -31,13 +31,13 @@ namespace ShadowPlay
 			relays
 		};
 
-        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_OPENGL, rhiRelays);
-        p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();		
-        GetLogger().Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::SPAppBase");
+        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, rhiRelays);
+        p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
+        LOG_INFO("SPAppBase::SPAppBase");
     }
     SPAppBase::~SPAppBase()
     {
-		GetLogger().Log(SPLogger::LoggerLevel::LOG_INFO, "SPAppBase::~SPAppBase");
+        LOG_INFO("SPAppBase::~SPAppBase");
         p->m_memAllocator->AllocatorTerminator();
     }
     void SPAppBase::AppInit()
