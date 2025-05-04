@@ -1,13 +1,18 @@
 #pragma once
 #include <SPGlobal.h>
-#include "../Common/SPObject.h"
+#include "../../Common/SPObject.h"
 #include <d3d11.h>
+
+#include <memory>
 
 namespace ShadowPlay 
 {
+	class SPD3DRHI;
+
 	struct SPD3DRHIResourcesRelays
 	{
 		SPObjRelays m_baseObjRelay;
+		SPD3DRHI& m_rhiInst;
 #ifdef SHADOWPLAY_PLAT_WIN
 		ID3D11Device& m_device;
 		IDXGIFactory& m_factory;
@@ -28,6 +33,7 @@ namespace ShadowPlay
 		}
 	
 	protected:
+		std::shared_ptr<const SPD3DRHI> m_engineRHIInst;
 #ifdef SHADOWPLAY_PLAT_WIN
 		ID3D11Device& m_renderingDevice;
 		IDXGIFactory& m_dxgiFactory;

@@ -2,14 +2,14 @@
 #include "SPRHIFactory.h"
 
 #ifdef SHADOWPLAY_API_VK
-#include "SPVulkanRHI.h"
+#include "Vulkan/SPVulkanRHI.h"
 #endif
 
 #ifdef SHADOWPLAY_API_DIRECTX
-#include "SPD3DRHI.h"
+#include "DirectX/SPD3DRHI.h"
 #endif
 
-#include "SPOpenGLRHI.h"
+#include "OpenGL/SPOpenGLRHI.h"
 
 #include "../Common/SPCommon.h"
 

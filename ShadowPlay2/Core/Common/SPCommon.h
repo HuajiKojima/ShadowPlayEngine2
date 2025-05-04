@@ -2,8 +2,12 @@
 #include "../Tools/SPLogger.h"
 #include "../../Engine/Math/SPRect.h"
 
+#include <string>
+
 namespace ShadowPlay
 {
+    class SPD3DRHI;
+
 	struct SPObjRelays
 	{
 		SPLogger& m_logger;
@@ -37,6 +41,19 @@ namespace ShadowPlay
     struct SPMemManagerBaseRelays
     {
         SPObjRelays m_baseObjRelay;
+    };
+
+    struct SPDisplayBaseRelays
+    {
+        SPObjRelays m_baseObjRelay;
+		SPRect m_windowRect{};
+		std::string m_windowTitle{};
+    };
+
+    struct SPWin32WindowBaseRelays
+    {
+        SPDisplayBaseRelays m_baseDisplayRelay;
+		SPD3DRHI& m_rhiInst;
     };
 
 	struct SPSwapChainBaseRelays

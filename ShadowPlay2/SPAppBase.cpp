@@ -4,6 +4,10 @@
 #include "Core/RHI/SPRHIFactory.h"
 #include "Core/Memory/SPMemManager.h"
 
+#include "Engine/Render/SPRenderer.h"
+
+#include <memory>
+
 namespace ShadowPlay
 {
 
@@ -12,6 +16,7 @@ namespace ShadowPlay
         SPRHI* m_rhiInstance = nullptr;
         SPRHIFactory* m_factoryInstance = nullptr;
         SPHeapMemAllocator* m_memAllocator = SPHeapMemAllocatorFactory::GetAllocator();
+        std::unique_ptr<SPRenderer> m_rendererInstance{};
     };
 
 	SPAppBase::SPAppBase()
@@ -31,8 +36,11 @@ namespace ShadowPlay
 			relays
 		};
 
-        p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, rhiRelays);
-        p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
+        //p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, rhiRelays);
+        //p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
+
+		p->m_rendererInstance = std::make_unique<SPRenderer>(relays);
+
         LOG_INFO("SPAppBase::SPAppBase");
     }
     SPAppBase::~SPAppBase()
@@ -43,19 +51,22 @@ namespace ShadowPlay
     void SPAppBase::AppInit()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
-        p->m_rhiInstance->RHIInit(1280, 720, "ShadowPlay");
+        //p->m_rhiInstance->RHIInit(1280, 720, "ShadowPlay");
+		p->m_rendererInstance->Init(RenderingAPI::API_DIRECTX);
         AppInitCallback();
     }
     void SPAppBase::AppRun()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         AppRunCallback();
-        p->m_rhiInstance->RHILoop();
+        //p->m_rhiInstance->RHILoop();
+		p->m_rendererInstance->Render();
     }
     void SPAppBase::AppTerminate()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         AppTerminateCallback();
-        p->m_rhiInstance->RHITerminate();
+        //p->m_rhiInstance->RHITerminate();
+		p->m_rendererInstance->Terminate();
     }
 }

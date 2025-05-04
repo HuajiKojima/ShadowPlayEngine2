@@ -1,5 +1,5 @@
 #pragma once
-#include "SPRHI.h"
+#include "../SPRHI.h"
 #include <SPGlobal.h>
  namespace ShadowPlay
  {
