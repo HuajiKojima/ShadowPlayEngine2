@@ -32,6 +32,6 @@ namespace ShadowPlay
         SPRHI* AllocateRHI();
     private:
 
-        SPRHIFactoryPrivate* p = nullptr;
+        std::unique_ptr<SPRHIFactoryPrivate, void(*)(SPRHIFactoryPrivate*)> p;
     };
 }

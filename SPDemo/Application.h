@@ -1,4 +1,5 @@
 #pragma once
+#include <memory>
 #include <ShadowPlay.h>
 
 struct ApplicationPrivate;
@@ -14,5 +15,5 @@ public:
     virtual void AppTerminateCallback();
 
 private:
-    ApplicationPrivate* p = nullptr;
+    std::unique_ptr<ApplicationPrivate, void(*)(ApplicationPrivate*)> p;
 };

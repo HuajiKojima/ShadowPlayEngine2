@@ -24,6 +24,6 @@ namespace ShadowPlay
         const char* GetWindowTitle();
 
     private:
-        SPRHIPrivate* p = nullptr;
+        std::unique_ptr<SPRHIPrivate, void(*)(SPRHIPrivate*)> p;
     };
 }

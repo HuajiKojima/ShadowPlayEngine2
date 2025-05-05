@@ -20,21 +20,32 @@ struct ApplicationPrivate
     int a;
 };
 
+void DeleteApplicationPrivate(ApplicationPrivate* p)
+{
+	if (p != nullptr)
+	{
+		delete p;
+		p = nullptr;
+	}
+}
+
 ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 {
     static Application* app = new Application();
     return app;
 }
 
-Application::Application()
+Application::Application():
+	SPAppBase(),
+	p(new ApplicationPrivate(), DeleteApplicationPrivate)
 {
-    SHADOWPLAY_ALLOC_HEAPMEM(p, ApplicationPrivate);
+    
     LOG_INFO("Application::Application");
 }
 
 Application::~Application()
 {
-    SHADOWPLAY_DEALLOC_HEAPMEM(p, ApplicationPrivate);
+    
 	LOG_INFO("Application::~Application");
 }
 

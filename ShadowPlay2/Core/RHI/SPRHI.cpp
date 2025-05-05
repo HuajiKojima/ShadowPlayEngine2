@@ -11,16 +11,24 @@ namespace ShadowPlay
 		int m_windowHeight = 0;					      // 4 Bytes
     };
 
-    SPRHI::SPRHI(const SPRHIBaseRelays& relays):
-		SPObject(relays.m_baseObjRelay)
+    void DeleteSPRHIPrivate(SPRHIPrivate* p)
     {
-        p = new SPRHIPrivate();
+		if (p != nullptr)
+		{
+			delete p;
+			p = nullptr;
+		}
+    }
+
+    SPRHI::SPRHI(const SPRHIBaseRelays& relays):
+		SPObject(relays.m_baseObjRelay),
+		p(new SPRHIPrivate(), DeleteSPRHIPrivate)
+    {
     }
 
     SPRHI::~SPRHI()
     {
-		SHADOWPLAY_ASSERT(p != nullptr);
-        delete p;
+		
     }
     void SPRHI::setPrivate(uint32_t width, uint32_t height, const char *windowTitle)
     {

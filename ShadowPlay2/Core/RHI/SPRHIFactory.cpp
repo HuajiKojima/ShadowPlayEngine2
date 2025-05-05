@@ -20,14 +20,23 @@ namespace ShadowPlay
         SPRHI* m_rhi;
     };
 
-    SPRHIFactory::SPRHIFactory()
-    {
-        p = new SPRHIFactoryPrivate();
+	void DeleteSPRHIFactoryPrivate(SPRHIFactoryPrivate* p)
+	{
+		if (p != nullptr)
+		{
+			delete p;
+			p = nullptr;
+		}
+	}
+
+    SPRHIFactory::SPRHIFactory():
+		p(new SPRHIFactoryPrivate(), DeleteSPRHIFactoryPrivate)
+	{
+		
     }
     SPRHIFactory::~SPRHIFactory()
     {
-        SHADOWPLAY_ASSERT(p != nullptr);
-        delete p;
+        
     }
     SPRHIFactory* SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI apiclass, const SPRHIBaseRelays& relay)
     {

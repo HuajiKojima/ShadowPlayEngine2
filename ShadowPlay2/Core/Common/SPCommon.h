@@ -50,6 +50,11 @@ namespace ShadowPlay
 		std::string m_windowTitle{};
     };
 
+    struct SPRendererBaseRelays
+    {
+        SPDisplayBaseRelays m_baseDisplayRelay;
+    };
+
     struct SPWin32WindowBaseRelays
     {
         SPDisplayBaseRelays m_baseDisplayRelay;

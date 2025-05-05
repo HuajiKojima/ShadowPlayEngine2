@@ -1,7 +1,6 @@
 #pragma once
 
 #include "../../Core/Common/SPObject.h"
-#include <memory>
 
 namespace ShadowPlay
 {
@@ -22,13 +21,13 @@ namespace ShadowPlay
 	class SPRenderer : public SPObject
 	{
 	public:
-		explicit SPRenderer(const SPObjRelays& relay);
-		~SPRenderer() {}
+		explicit SPRenderer(const SPRendererBaseRelays& relay);
+		~SPRenderer();
 		void Init(RenderingAPI api);
 		void Render();
 		void Terminate();
 
 	private:
-		SPRendererPrivate* m_pri = nullptr;
+		std::unique_ptr<SPRendererPrivate, void(*)(SPRendererPrivate*)> m_pri;
 	};
 }

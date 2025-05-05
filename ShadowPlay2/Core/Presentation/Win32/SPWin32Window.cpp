@@ -1,3 +1,4 @@
+#include "ShadowPreCompileHeader.h"
 #include "SPWin32Window.h"
 
 #include "../../RHI/DirectX/SPD3DSwapChain.h"
@@ -35,15 +36,28 @@ namespace ShadowPlay
 		bool m_runningPermission = true;
 	};
 
+	void DeleteSPWin32WindowPrivate(SPWin32WindowPrivate* ptr)
+	{
+		if (ptr != nullptr)
+		{
+			delete ptr;
+			ptr = nullptr;
+		}
+	}
+
 	SPWin32Window::SPWin32Window(const SPWin32WindowBaseRelays& relay) :
 		SPDisplay(relay.m_baseDisplayRelay),
 		m_windowRect(relay.m_baseDisplayRelay.m_windowRect),
 		m_windowTitle(relay.m_baseDisplayRelay.m_windowTitle),
-		m_pri(new SPWin32WindowPrivate())
+		m_pri(new SPWin32WindowPrivate(), DeleteSPWin32WindowPrivate)
 	{
 		Init();
 		m_pri->m_swapChainInst = relay.m_rhiInst.CreateSwapChain({m_handle, m_windowRect});
 
+	}
+
+	SPWin32Window::~SPWin32Window()
+	{
 	}
 
 	void SPWin32Window::Init()

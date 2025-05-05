@@ -10,7 +10,7 @@ namespace ShadowPlay
 	{
 	public:
 		explicit SPWin32Window(const SPWin32WindowBaseRelays& relay);
-		~SPWin32Window() {}
+		~SPWin32Window();
 		void Init() override;
 		void Terminate() override;
 		void LoopFunc(bool& loopPermission) override;
@@ -21,6 +21,6 @@ namespace ShadowPlay
 		void* m_handle;
 
 	private:
-		SPWin32WindowPrivate* m_pri = nullptr;
+		std::unique_ptr<SPWin32WindowPrivate, void(*)(SPWin32WindowPrivate*)> m_pri;
 	};
 }

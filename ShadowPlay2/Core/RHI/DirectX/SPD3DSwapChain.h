@@ -1,7 +1,6 @@
 #pragma once
 #include "D3DRHIResources.h"
 
-#include <wrl.h>
 
 namespace ShadowPlay 
 {

@@ -1,9 +1,10 @@
 #pragma once
 #include <SPGlobal.h>
 #include "../../Common/SPObject.h"
-#include <d3d11.h>
 
-#include <memory>
+#ifdef SHADOWPLAY_PLAT_WIN
+#include <d3d11.h>
+#endif // SHADOWPLAY_PLAT_WIN
 
 namespace ShadowPlay 
 {

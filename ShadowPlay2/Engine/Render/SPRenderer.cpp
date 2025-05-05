@@ -12,19 +12,35 @@ namespace ShadowPlay
 {
 	struct SPRendererPrivate
 	{
-		SPRHI* m_rhiInst = nullptr;
-		SPDisplay* m_displayInst = nullptr;
-		SPRHIFactory* m_factoryInst = nullptr;
+		std::unique_ptr<SPRHI> m_rhiInst = nullptr;
+		std::unique_ptr<SPDisplay> m_displayInst = nullptr;
+		std::unique_ptr<SPRHIFactory> m_factoryInst = nullptr;
+
+		SPRect m_windowRect = { 0, 0, 1280, 720 };
+		std::string m_windowTitle = "ShadowPlay";
+
 		bool m_runningPermission = true;
 	};
 
-	SPRenderer::SPRenderer(const SPObjRelays& relay) : SPObject(relay) 
+	void PrivateDelete(SPRendererPrivate* pri)
 	{
-		m_pri = new SPRendererPrivate();
+		if (pri)
+		{
+			delete pri;
+			pri = nullptr;
+		}
 	}
+
+	SPRenderer::SPRenderer(const SPRendererBaseRelays& relay) :
+		SPObject(relay.m_baseDisplayRelay.m_baseObjRelay),
+		m_pri(new SPRendererPrivate(), PrivateDelete)
+	{
+		m_pri->m_windowRect = relay.m_baseDisplayRelay.m_windowRect;
+		m_pri->m_windowTitle = relay.m_baseDisplayRelay.m_windowTitle;
+	}
+	SPRenderer::~SPRenderer() {}
 	void SPRenderer::Init(RenderingAPI api)
 	{
-		m_pri->m_factoryInst = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, { GetLogger() });
 
 		switch (api)
 		{
@@ -34,14 +50,16 @@ namespace ShadowPlay
 			break;
 		case ShadowPlay::RenderingAPI::API_DIRECTX:
 		{
-			m_pri->m_rhiInst = m_pri->m_factoryInst->AllocateRHI();
-			m_pri->m_rhiInst->RHIInit(1280, 720, "ShadowPlay");
+			m_pri->m_factoryInst = std::unique_ptr<SPRHIFactory>(SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, { GetLogger() }));
+			m_pri->m_rhiInst = std::unique_ptr<SPRHI>(m_pri->m_factoryInst->AllocateRHI());
+			m_pri->m_rhiInst->RHIInit(m_pri->m_windowRect.width, m_pri->m_windowRect.height, "ShadowPlay");
 			SPWin32WindowBaseRelays windowRelays
 			{
-				{ GetLogger(), SPRect{0, 0, 1280, 720}, "ShadowPlay" },
-				*reinterpret_cast<SPD3DRHI*>(m_pri->m_rhiInst)
+				{ GetLogger(), m_pri->m_windowRect, "ShadowPlay" },
+				//*reinterpret_cast<SPD3DRHI*>(m_pri->m_rhiInst)
+				*reinterpret_cast<SPD3DRHI*>(m_pri->m_rhiInst.get())
 			};
-			m_pri->m_displayInst = new SPWin32Window(windowRelays);
+			m_pri->m_displayInst = std::make_unique<SPWin32Window>(windowRelays);
 			LOG_INFO("SPRenderer::Init");
 		}
 			break;
@@ -57,9 +75,9 @@ namespace ShadowPlay
 		{
 			return;
 		}
+		LOG_INFO("SPRenderer::Render");
 		m_pri->m_rhiInst->RHILoop();
 		m_pri->m_displayInst->DisplayRunning();
-		LOG_INFO("SPRenderer::Render");
 	}
 	void SPRenderer::Terminate()
 	{

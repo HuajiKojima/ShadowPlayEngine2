@@ -6,4 +6,5 @@
 
 #ifdef SHADOWPLAY_PLAT_WIN
 #include <windows.h>
+#include <wrl.h>
 #endif

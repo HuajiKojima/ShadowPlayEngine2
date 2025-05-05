@@ -6,8 +6,6 @@
 
 #include "Engine/Render/SPRenderer.h"
 
-#include <memory>
-
 namespace ShadowPlay
 {
 
@@ -19,27 +17,33 @@ namespace ShadowPlay
         std::unique_ptr<SPRenderer> m_rendererInstance{};
     };
 
+	void DeleteSPAppBasePrivate(SPAppBasePrivate* p)
+	{
+		if (p != nullptr)
+		{
+            delete p;
+			p = nullptr;
+		}
+	}
+
 	SPAppBase::SPAppBase()
         : SPObject({ *std::make_unique<SPLogger>(SPLogger::LoggerLevel::LOG_INFO).release() }),
-        m_logInstance(&m_objLogger)
+        m_logInstance(&m_objLogger),
+		p(new SPAppBasePrivate(), DeleteSPAppBasePrivate)
     {
-        p = new SPAppBasePrivate();
 
 		// Initialize the relay
-		SPObjRelays relays
+        SPDisplayBaseRelays relays
 		{
-			m_objLogger
+			m_objLogger, SPRect{ 0, 0, 1280, 720 }, "ShadowPlay"
 		};
-		// Initialize the RHI relay
-		SPRHIBaseRelays rhiRelays
+		// Initialize the renderer
+		SPRendererBaseRelays rendererRelays
 		{
 			relays
 		};
 
-        //p->m_factoryInstance = SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, rhiRelays);
-        //p->m_rhiInstance = p->m_factoryInstance->AllocateRHI();
-
-		p->m_rendererInstance = std::make_unique<SPRenderer>(relays);
+        p->m_rendererInstance = std::make_unique<SPRenderer>(rendererRelays);
 
         LOG_INFO("SPAppBase::SPAppBase");
     }
@@ -51,7 +55,6 @@ namespace ShadowPlay
     void SPAppBase::AppInit()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
-        //p->m_rhiInstance->RHIInit(1280, 720, "ShadowPlay");
 		p->m_rendererInstance->Init(RenderingAPI::API_DIRECTX);
         AppInitCallback();
     }
@@ -59,14 +62,12 @@ namespace ShadowPlay
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         AppRunCallback();
-        //p->m_rhiInstance->RHILoop();
 		p->m_rendererInstance->Render();
     }
     void SPAppBase::AppTerminate()
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         AppTerminateCallback();
-        //p->m_rhiInstance->RHITerminate();
 		p->m_rendererInstance->Terminate();
     }
 }

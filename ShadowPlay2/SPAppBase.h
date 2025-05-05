@@ -2,8 +2,6 @@
 #include "SPGlobal.h"
 #include "Core/Common/SPObject.h"
 
-#include <memory>
-
 namespace ShadowPlay
 {
     struct SPAppBasePrivate;
@@ -23,7 +21,7 @@ namespace ShadowPlay
         virtual void AppTerminateCallback() = 0;
     private:
         /* data */
-        SPAppBasePrivate* p;
+        std::unique_ptr<SPAppBasePrivate, void(*)(SPAppBasePrivate*)> p;
         std::unique_ptr<SPLogger> m_logInstance;
     };
 

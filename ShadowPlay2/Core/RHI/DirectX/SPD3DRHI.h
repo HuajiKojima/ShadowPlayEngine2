@@ -3,14 +3,12 @@
 #include "D3DRHIResources.h"
 #include <SPGlobal.h>
 
-#include <memory>
-
 namespace ShadowPlay
 {
     struct SPD3DRHIPrivate;
     class SPD3DSwapChain;
 
-	class SHADOWPLAY_API SPD3DRHI final : public SPRHI, public std::enable_shared_from_this<SPD3DRHI>
+	class SHADOWPLAY_API SPD3DRHI final : public SPRHI/*, public std::enable_shared_from_this<SPD3DRHI>*/
     {
     public:
         explicit SPD3DRHI(const SPDirectXBaseRelays& relay);
@@ -26,6 +24,6 @@ namespace ShadowPlay
         SPD3DRHIResourcesRelays GetRHIResourcesRelay() const;
 
 	private:
-        SPD3DRHIPrivate* p_d3d;
+        std::unique_ptr<SPD3DRHIPrivate, void(*)(SPD3DRHIPrivate*)> p_d3d;
     };
 }

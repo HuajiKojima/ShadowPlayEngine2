@@ -1,3 +1,4 @@
+#include "ShadowPreCompileHeader.h"
 #include "SPD3DSwapChain.h"
 namespace ShadowPlay
 {
