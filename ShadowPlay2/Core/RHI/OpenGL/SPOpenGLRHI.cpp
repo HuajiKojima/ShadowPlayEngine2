@@ -2,7 +2,7 @@
 #include "SPOpenGLRHI.h"
 
 #include <GLFW/glfw3.h>
-#include <glad.h>
+#include <glad/glad.h>
 
 namespace ShadowPlay 
 {
@@ -14,6 +14,19 @@ namespace ShadowPlay
 		bool glInitialzed = true;					// 1 Byte
 	};
 
+	void ReleaseOpenGLRHIPrivate(SPOpenGLRHIPrivate* p_gl)
+	{
+		if (p_gl != nullptr) 
+		{
+			if (p_gl->m_window != nullptr) 
+			{
+				p_gl->m_window = nullptr;
+			}
+			delete p_gl;
+			p_gl = nullptr;
+		}
+	}
+
 	// Support change viewport.
 	void framebuffer_size_callback(GLFWwindow* window, int width, int height)
 	{
@@ -21,14 +34,13 @@ namespace ShadowPlay
 	}
 
 	SPOpenGLRHI::SPOpenGLRHI(const SPOpenGLBaseRelays& relay):
-		SPRHI(relay.m_baseRHIRelay)
+		SPRHI(relay.m_baseRHIRelay),
+		p_gl(new SPOpenGLRHIPrivate(), ReleaseOpenGLRHIPrivate)
 	{
-		p_gl = new SPOpenGLRHIPrivate();
 	}
 	SPOpenGLRHI::~SPOpenGLRHI()
 	{
 		SHADOWPLAY_ASSERT(p_gl != nullptr);
-		delete p_gl;
 	}
 	void SPOpenGLRHI::RHIInit(uint32_t width, uint32_t height, const char* windowTitle)
 	{

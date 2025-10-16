@@ -1,5 +1,5 @@
 #include "Application.h"
-#include <Core/Memory/SPMemManager.h>
+#include <Core/HAL/Memory/SPMemManager.h>
 #include <Core/Tools/SPLogger.h>
 
 #include <functional>

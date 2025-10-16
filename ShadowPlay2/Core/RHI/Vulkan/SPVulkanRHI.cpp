@@ -10,16 +10,24 @@ namespace ShadowPlay
 		GLFWwindow* m_window = nullptr;				// 8 Bytes
 		VkInstance m_instance = nullptr;			// 8 Bytes
     };
+
+	void ReleaseVulkanRHIPrivate(SPVulkanRHIPrivate* m_pri)
+	{
+		if (m_pri != nullptr)
+		{
+			delete m_pri;
+			m_pri = nullptr;
+		}
+	}
     
     SPVulkanRHI::SPVulkanRHI(const SPVulkanBaseRelays& relay):
-		SPRHI(relay.m_baseRHIRelay)
+		SPRHI(relay.m_baseRHIRelay),
+		p_vk(new SPVulkanRHIPrivate, ReleaseVulkanRHIPrivate)
     {
-        p_vk = new SPVulkanRHIPrivate();
     }
     SPVulkanRHI::~SPVulkanRHI()
     {
         SHADOWPLAY_ASSERT(p_vk != nullptr);
-        delete p_vk;
     }
     void SPVulkanRHI::RHIInit(uint32_t width, uint32_t height, const char *windowTitle)
     {

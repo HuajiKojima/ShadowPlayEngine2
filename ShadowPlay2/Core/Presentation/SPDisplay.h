@@ -8,7 +8,7 @@ namespace ShadowPlay
 	{
 	public:
 		explicit SPDisplay(const SPDisplayBaseRelays& base) : SPObject(base.m_baseObjRelay) {}
-		~SPDisplay() {}
+		virtual ~SPDisplay() {}
 		// Warning: This function is only called once when the display is created.
 		virtual void Init() {}
 		void DisplayRunning();

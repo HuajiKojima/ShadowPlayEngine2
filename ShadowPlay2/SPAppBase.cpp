@@ -2,7 +2,7 @@
 #include "SPAppBase.h"
 
 #include "Core/RHI/SPRHIFactory.h"
-#include "Core/Memory/SPMemManager.h"
+#include "Core/HAL/Memory/SPMemManager.h"
 
 #include "Engine/Render/SPRenderer.h"
 

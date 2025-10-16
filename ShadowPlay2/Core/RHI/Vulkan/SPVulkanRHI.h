@@ -17,7 +17,7 @@
     private:
         void CreateVulkanInstance();
 
-        SPVulkanRHIPrivate* p_vk = nullptr;
+        std::unique_ptr<SPVulkanRHIPrivate, void(*)(SPVulkanRHIPrivate*)> p_vk;
 
     };
  }

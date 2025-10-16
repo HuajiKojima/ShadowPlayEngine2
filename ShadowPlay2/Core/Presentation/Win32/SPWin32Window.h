@@ -10,7 +10,7 @@ namespace ShadowPlay
 	{
 	public:
 		explicit SPWin32Window(const SPWin32WindowBaseRelays& relay);
-		~SPWin32Window();
+		~SPWin32Window() override;
 		void Init() override;
 		void Terminate() override;
 		void LoopFunc(bool& loopPermission) override;

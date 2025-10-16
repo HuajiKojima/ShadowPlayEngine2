@@ -17,6 +17,6 @@ namespace ShadowPlay
 
 
 	private:
-		SPOpenGLRHIPrivate* p_gl;
+		std::unique_ptr<SPOpenGLRHIPrivate, void(*)(SPOpenGLRHIPrivate*)> p_gl;
 	};
 }

@@ -1,6 +1,6 @@
 #pragma once
 #include <SPGlobal.h>
-#include "../Common/SPObject.h"
+#include "../../Common/SPObject.h"
 
 namespace ShadowPlay
 {
