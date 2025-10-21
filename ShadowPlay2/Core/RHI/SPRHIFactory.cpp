@@ -9,8 +9,6 @@
 #include "DirectX/SPD3DRHI.h"
 #endif
 
-#include "OpenGL/SPOpenGLRHI.h"
-
 #include "../Common/SPCommon.h"
 
 namespace ShadowPlay
