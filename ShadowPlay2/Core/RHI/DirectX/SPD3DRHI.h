@@ -15,7 +15,7 @@ namespace ShadowPlay
         ~SPD3DRHI();
 
         virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle);
-		virtual void RHILoop();
+		virtual void RHIRendering();
 		virtual void RHITerminate();
 
         std::shared_ptr<SPD3DSwapChain> CreateSwapChain(const SPSwapChainBaseRelays& relay) const;

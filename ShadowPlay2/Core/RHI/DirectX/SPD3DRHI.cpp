@@ -103,7 +103,7 @@ namespace ShadowPlay
             "Create DXGI adapter failed.");
 #endif
     }
-    void SPD3DRHI::RHILoop()
+    void SPD3DRHI::RHIRendering()
     {
 		SHADOWPLAY_ASSERT(p_d3d != nullptr);
 

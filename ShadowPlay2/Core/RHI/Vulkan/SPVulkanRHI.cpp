@@ -2,12 +2,12 @@
 #include "SPVulkanRHI.h"
 #define GLFW_INCLUDE_VULKAN
 #include <GLFW/glfw3.h>
+
 namespace ShadowPlay
 {
     struct SPVulkanRHIPrivate
     {
         // The large param is up, smaller is down.
-		GLFWwindow* m_window = nullptr;				// 8 Bytes
 		VkInstance m_instance = nullptr;			// 8 Bytes
     };
 
@@ -32,25 +32,16 @@ namespace ShadowPlay
     void SPVulkanRHI::RHIInit(uint32_t width, uint32_t height, const char *windowTitle)
     {
         SHADOWPLAY_ASSERT(p_vk != nullptr);
-        glfwInit();
-		glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
-		glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
-		p_vk->m_window = glfwCreateWindow(width, height, windowTitle, nullptr, nullptr);
         setPrivate(width, height, windowTitle);
         CreateVulkanInstance();
     }
-    void SPVulkanRHI::RHILoop()
+    void SPVulkanRHI::RHIRendering()
     {
-        while (!glfwWindowShouldClose(p_vk->m_window)) 
-		{
-			glfwPollEvents();
-		}
+        
     }
     void SPVulkanRHI::RHITerminate()
     {
         vkDestroyInstance(p_vk->m_instance, nullptr);
-		glfwDestroyWindow(p_vk->m_window);
-		glfwTerminate();
     }
     void SPVulkanRHI::CreateVulkanInstance()
     {

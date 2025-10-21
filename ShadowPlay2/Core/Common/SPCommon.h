@@ -7,6 +7,7 @@
 namespace ShadowPlay
 {
     class SPD3DRHI;
+    class SPRHI;
 
 	struct SPObjRelays
 	{
@@ -58,8 +59,14 @@ namespace ShadowPlay
     struct SPWin32WindowBaseRelays
     {
         SPDisplayBaseRelays m_baseDisplayRelay;
-		SPD3DRHI& m_rhiInst;
+        SPRHI* m_rhiInst;
     };
+
+    struct SPGeneralWindowBaseRelays
+    {
+        SPDisplayBaseRelays m_baseDisplayRelay;
+		SPRHI* m_rhiInst;
+	};
 
 	struct SPSwapChainBaseRelays
 	{

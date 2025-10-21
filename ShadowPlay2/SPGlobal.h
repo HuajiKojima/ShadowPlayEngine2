@@ -34,3 +34,7 @@ inline void SPAssert(const char* fileName, unsigned int lineNum)
 #else
 #define SHADOWPLAY_ASSERT(condition)
 #endif
+
+#define GRAPHICS_API_NULL 0
+#define GRAPHICS_API_VK 1
+#define GRAPHICS_API_DIRECTX 2

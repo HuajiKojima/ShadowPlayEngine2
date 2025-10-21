@@ -1,5 +1,6 @@
 #include "Application.h"
 #include <Core/HAL/Memory/SPMemManager.h>
+#include <Core/HAL/Async/SPProcessPool.h>
 #include <Core/Tools/SPLogger.h>
 
 #include <functional>
@@ -7,17 +8,17 @@
 
 struct MyStruct
 {
-    int a;
-    int b;
+	int a;
+	int b;
 };
 
 struct ApplicationPrivate
 {
-    ApplicationPrivate()
-    {
-        a = 0;
-    }
-    int a;
+	ApplicationPrivate()
+	{
+		a = 0;
+	}
+	int a;
 };
 
 void DeleteApplicationPrivate(ApplicationPrivate* p)
@@ -31,36 +32,36 @@ void DeleteApplicationPrivate(ApplicationPrivate* p)
 
 ShadowPlay::SPAppBase * ShadowPlay::ReturnApp()
 {
-    static Application* app = new Application();
-    return app;
+	static Application* app = new Application();
+	return app;
 }
 
 Application::Application():
 	SPAppBase(),
 	p(new ApplicationPrivate(), DeleteApplicationPrivate)
 {
-    
-    LOG_INFO("Application::Application");
+	
+	LOG_INFO("Application::Application");
 }
 
 Application::~Application()
 {
-    
+	
 	LOG_INFO("Application::~Application");
 }
 
 void Application::AppInitCallback()
 {
 
-    
+	
 }
 
 void Application::AppRunCallback()
 {
-    
+	
 }
 
 void Application::AppTerminateCallback()
 {
-    
+	
 }

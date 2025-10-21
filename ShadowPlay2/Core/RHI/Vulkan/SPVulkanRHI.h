@@ -11,9 +11,9 @@
         explicit SPVulkanRHI(const SPVulkanBaseRelays& relay);
         ~SPVulkanRHI();
 
-        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle);
-        virtual void RHILoop();
-        virtual void RHITerminate();
+        virtual void RHIInit(uint32_t width, uint32_t height, const char* windowTitle) override;
+        virtual void RHIRendering() override;
+        virtual void RHITerminate() override;
     private:
         void CreateVulkanInstance();
 

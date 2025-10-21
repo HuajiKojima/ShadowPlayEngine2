@@ -9,12 +9,14 @@ namespace ShadowPlay
 	class SPWindow : public SPDisplay
 	{
 	public:
-		explicit SPWindow(const SPRect& rect, const std::string& title);
+		explicit SPWindow(const SPGeneralWindowBaseRelays& relay);
 		~SPWindow() override;
 
 		void Init() override;
 		void Terminate() override;
 		void LoopFunc(bool& loopPermission) override;
+
+		void SetRHICallback(const std::function<void()>& callback) override;
 
 	protected:
 		SPRect m_windowRect;

@@ -6,6 +6,7 @@
 #include "../../Core/RHI/DirectX/SPD3DSwapChain.h"
 #include "../../Core/Presentation/SPDisplay.h"
 #include "../../Core/Presentation/Win32/SPWin32Window.h"
+#include "../../Core/Presentation/General/SPWindow.h"
 
 
 namespace ShadowPlay
@@ -39,44 +40,47 @@ namespace ShadowPlay
 		m_pri->m_windowTitle = relay.m_baseDisplayRelay.m_windowTitle;
 	}
 	SPRenderer::~SPRenderer() {}
-	void SPRenderer::Init(RenderingAPI api)
+	void SPRenderer::Init(uint32_t api)
 	{
-
+		m_pri->m_factoryInst = std::unique_ptr<SPRHIFactory>(SPRHIFactory::GetRHIFactoryInstance(api, { GetLogger() }));
+		m_pri->m_rhiInst = std::unique_ptr<SPRHI>(m_pri->m_factoryInst->AllocateRHI());
+		m_pri->m_rhiInst->RHIInit(m_pri->m_windowRect.width, m_pri->m_windowRect.height, "ShadowPlay");
 		switch (api)
 		{
-		case ShadowPlay::RenderingAPI::API_NULL:
-			break;
-		case ShadowPlay::RenderingAPI::API_VULKAN:
-			break;
-		case ShadowPlay::RenderingAPI::API_DIRECTX:
+		case GRAPHICS_API_VK: 
 		{
-			m_pri->m_factoryInst = std::unique_ptr<SPRHIFactory>(SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI::API_DIRECTX, { GetLogger() }));
-			m_pri->m_rhiInst = std::unique_ptr<SPRHI>(m_pri->m_factoryInst->AllocateRHI());
-			m_pri->m_rhiInst->RHIInit(m_pri->m_windowRect.width, m_pri->m_windowRect.height, "ShadowPlay");
+			SPGeneralWindowBaseRelays windowRelays
+			{
+				{ GetLogger(), m_pri->m_windowRect, "ShadowPlay" },
+				m_pri->m_rhiInst.get()
+			};
+			m_pri->m_displayInst = std::make_unique<SPWindow>(windowRelays);
+		}
+			break;
+		case GRAPHICS_API_DIRECTX:
+		{
 			SPWin32WindowBaseRelays windowRelays
 			{
 				{ GetLogger(), m_pri->m_windowRect, "ShadowPlay" },
-				//*reinterpret_cast<SPD3DRHI*>(m_pri->m_rhiInst)
-				*reinterpret_cast<SPD3DRHI*>(m_pri->m_rhiInst.get())
+				m_pri->m_rhiInst.get()
 			};
 			m_pri->m_displayInst = std::make_unique<SPWin32Window>(windowRelays);
-			LOG_INFO("SPRenderer::Init");
 		}
-			break;
-		case ShadowPlay::RenderingAPI::API_OPENGL:
 			break;
 		default:
-			break;
+			return;
 		}
+		m_pri->m_displayInst->Init();
+		m_pri->m_displayInst->SetRHICallback([this]() { m_pri->m_rhiInst->RHIRendering(); });
+		LOG_INFO("SPRenderer::Init");
 	}
-	void SPRenderer::Render()
+	void SPRenderer::Rendering()
 	{
 		if (!m_pri->m_runningPermission)
 		{
 			return;
 		}
 		LOG_INFO("SPRenderer::Render");
-		m_pri->m_rhiInst->RHILoop();
 		m_pri->m_displayInst->DisplayRunning();
 	}
 	void SPRenderer::Terminate()

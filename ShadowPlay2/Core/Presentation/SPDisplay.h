@@ -15,6 +15,8 @@ namespace ShadowPlay
 		virtual void LoopFunc(bool& loopPermission) {}
 		virtual void Terminate() {}
 
+		virtual void SetRHICallback(const std::function<void()>& callback) {}
+
 	private:
 		bool m_loopPermission = true;
 	};

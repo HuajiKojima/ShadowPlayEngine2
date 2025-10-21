@@ -23,8 +23,8 @@ namespace ShadowPlay
 	public:
 		explicit SPRenderer(const SPRendererBaseRelays& relay);
 		~SPRenderer();
-		void Init(RenderingAPI api);
-		void Render();
+		void Init(uint32_t api);
+		void Rendering();
 		void Terminate();
 
 	private:

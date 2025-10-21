@@ -25,9 +25,9 @@ namespace ShadowPlay
         SPRHIFactory();
         ~SPRHIFactory();
 
-        static SPRHIFactory* GetRHIFactoryInstance(GraphicsAPI apiclass, const SPRHIBaseRelays& relay);
+        static SPRHIFactory* GetRHIFactoryInstance(uint32_t apiclass, const SPRHIBaseRelays& relay);
 
-        void FactoryInitalize(GraphicsAPI apiclass, const SPRHIBaseRelays& relay);
+        void FactoryInitalize(uint32_t apiclass, const SPRHIBaseRelays& relay);
 
         SPRHI* AllocateRHI();
     private:

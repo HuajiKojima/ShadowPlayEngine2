@@ -33,6 +33,7 @@ namespace ShadowPlay
 		MSG m_windowMsg;
 #endif
 		std::shared_ptr<SPD3DSwapChain> m_swapChainInst; 
+		std::function<void()> m_rhiCallback;
 		bool m_runningPermission = true;
 	};
 
@@ -52,7 +53,7 @@ namespace ShadowPlay
 		m_pri(new SPWin32WindowPrivate(), DeleteSPWin32WindowPrivate)
 	{
 		Init();
-		m_pri->m_swapChainInst = relay.m_rhiInst.CreateSwapChain({m_handle, m_windowRect});
+		m_pri->m_swapChainInst = reinterpret_cast<SPD3DRHI*>(relay.m_rhiInst)->CreateSwapChain({m_handle, m_windowRect});
 
 	}
 
@@ -107,17 +108,22 @@ namespace ShadowPlay
 	{
 		SHADOWPLAY_ASSERT(m_pri != nullptr);
 #ifdef SHADOWPLAY_PLAT_WIN
-		while (PeekMessage(&m_pri->m_windowMsg, NULL, 0, 0, PM_REMOVE))
+
+		m_pri->m_rhiCallback();
+
+		if (m_pri->m_windowMsg.message == WM_QUIT)
 		{
-			if (m_pri->m_windowMsg.message == WM_QUIT)
-			{
-				loopPermission = false;
-				break;
-			}
-			TranslateMessage(&m_pri->m_windowMsg);
-			DispatchMessage(&m_pri->m_windowMsg);
+			loopPermission = false;
 		}
+		TranslateMessage(&m_pri->m_windowMsg);
+		DispatchMessage(&m_pri->m_windowMsg);
+		loopPermission = loopPermission && !(static_cast<bool>(PeekMessage(&m_pri->m_windowMsg, NULL, 0, 0, PM_REMOVE)));
 		Sleep(1);
 #endif // SHADOWPLAY_PLAT_WIN
+	}
+	void SPWin32Window::SetRHICallback(const std::function<void()>& callback)
+	{
+		SHADOWPLAY_ASSERT(m_pri != nullptr);
+		m_pri->m_rhiCallback = callback;
 	}
 }

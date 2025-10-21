@@ -15,6 +15,8 @@ namespace ShadowPlay
 		void Terminate() override;
 		void LoopFunc(bool& loopPermission) override;
 
+		void SetRHICallback(const std::function<void()>& callback) override;
+
 	protected:
 		SPRect m_windowRect;
 		std::string m_windowTitle;

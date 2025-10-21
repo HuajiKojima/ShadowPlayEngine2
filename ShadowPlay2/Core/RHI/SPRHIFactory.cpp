@@ -38,7 +38,7 @@ namespace ShadowPlay
     {
         
     }
-    SPRHIFactory* SPRHIFactory::GetRHIFactoryInstance(GraphicsAPI apiclass, const SPRHIBaseRelays& relay)
+    SPRHIFactory* SPRHIFactory::GetRHIFactoryInstance(uint32_t apiclass, const SPRHIBaseRelays& relay)
     {
         static SPRHIFactory* factoryInstance = new SPRHIFactory();
         factoryInstance->FactoryInitalize(apiclass, relay);
@@ -49,16 +49,16 @@ namespace ShadowPlay
         SHADOWPLAY_ASSERT(p != nullptr);
         return p->m_rhi;
     }
-    void SPRHIFactory::FactoryInitalize(GraphicsAPI apiClass, const SPRHIBaseRelays& relay)
+    void SPRHIFactory::FactoryInitalize(uint32_t apiClass, const SPRHIBaseRelays& relay)
     {
         SHADOWPLAY_ASSERT(p != nullptr);
         switch (apiClass)
         {
-        case GraphicsAPI::API_NULL:
+        case GRAPHICS_API_NULL:
             p->m_rhi = nullptr;
             break;
         #ifdef SHADOWPLAY_API_VK
-        case GraphicsAPI::API_VULKAN: 
+        case GRAPHICS_API_VK: 
         {
             SPVulkanBaseRelays vkRelays
             {
@@ -69,7 +69,7 @@ namespace ShadowPlay
             break;
         #endif
         #ifdef SHADOWPLAY_API_DIRECTX
-        case GraphicsAPI::API_DIRECTX:
+        case GRAPHICS_API_DIRECTX:
         {
             SPDirectXBaseRelays dxRelays
             {
@@ -79,15 +79,6 @@ namespace ShadowPlay
         }
             break;
         #endif
-        case GraphicsAPI::API_OPENGL:
-        {
-            SPOpenGLBaseRelays glRelays
-            {
-                relay
-            };
-            p->m_rhi = new SPOpenGLRHI(glRelays);
-        }
-            break;
         default:
             p->m_rhi = nullptr;
             break;

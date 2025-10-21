@@ -8,10 +8,25 @@ namespace ShadowPlay
 	{
 		virtual bool Init() override;
 
-        virtual int32_t Run() override;
+		virtual int32_t Run() override;
 
-        virtual void Stop() override;
+		virtual void Stop() override;
 
-        virtual void Terminate() override;
+		virtual void Terminate() override;
+	};
+
+	class SHADOWPLAY_API SPPoolWork 
+	{
+	public:
+	};
+
+	class SHADOWPLAY_API SPProcessPool
+	{
+	public:
+		bool Create(int32_t threadCount = 8, const std::string& poolName = "DefaultThreadPool");
+
+		void Destroy();
+
+		//void PushTaskToQueue();
 	};
 }

@@ -8,16 +8,19 @@ namespace ShadowPlay
     {
     public:
 
-        enum class LoggerLevel
+        enum class LoggerLevel : uint32_t
         {
             LOG_ERROR = 0,
             LOG_WARNING,
-            LOG_INFO
+            LOG_INFO,
+            LOG_LEVEL_COUNT,
+			LOG_ALL = 0XDEADC0DE
         };
 
         explicit SPLogger(LoggerLevel logLevel = LoggerLevel::LOG_ERROR);
 		~SPLogger();
         void Log(LoggerLevel level, const char* msgStr) const;
+        void SetLogLevel(LoggerLevel level) { m_loggerLevel = level; }
     private:
         LoggerLevel m_loggerLevel;
         
